@@ -1,7 +1,7 @@
 <?php
 
 //read post param
-$param = $_GET["t"];
+$param = $_POST["t"];
 
 //connect to db
 $servername = "localhost";
@@ -20,8 +20,7 @@ $result = $conn->query($sql);
 
 $res = $result->fetch_all();
 foreach ($res as $r) {
-    echo $r[1] . "<br>";
+    echo '<div class="user">' . $r[1] . ' <button class="delete-btn" data-id="' . $r[0] . '">Delete</button></div>';
 }
 
-$conn->close();
 ?>
