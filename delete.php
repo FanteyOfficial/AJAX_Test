@@ -19,11 +19,17 @@ $userId = $_POST['id'];
 // Delete the user from the database
 $sql = "DELETE FROM `esempio` WHERE `id` = $userId";
 
+$response = array();
+
 if ($conn->query($sql) === TRUE) {
-    echo "User deleted successfully";
+    $response['status'] = 'success';
+    $response['message'] = 'User deleted successfully';
 } else {
-    echo "Error deleting user: " . $conn->error;
+    $response['status'] = 'error';
+    $response['message'] = $conn->error;
 }
+
+echo json_encode($response);
 
 $conn->close();
 

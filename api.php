@@ -19,8 +19,14 @@ $sql = "SELECT * FROM `esempio` WHERE `nome` LIKE '%$param%'";
 $result = $conn->query($sql);
 
 $res = $result->fetch_all();
+
+$rows = array();
 foreach ($res as $r) {
-    echo '<div class="user">' . $r[1] . ' <button class="delete-btn" data-id="' . $r[0] . '">Delete</button></div>';
+    $rows[] = array('id' => $r[0], 'user' => $r[1]);
 }
+
+echo json_encode($rows);
+
+$conn->close();
 
 ?>

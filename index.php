@@ -20,6 +20,12 @@
             console.log("DOM fully loaded and parsed");
             var bottone = document.getElementById("bottone");
             bottone.addEventListener("click", sulClick);
+            const ricerca = document.getElementById("valore");
+            ricerca.addEventListener("input", function(event) {
+                    event.preventDefault();
+                    document.getElementById("bottone").click();
+                
+            });
         });
 
         function sulClick(e) {
@@ -36,7 +42,16 @@
                     alert(`Error ${xhr.status}: ${xhr.statusText}`);
                 } else {
                     var t = document.getElementById("tabella");
-                    t.innerHTML = xhr.response;
+                    t.innerHTML = "";
+
+                    // display the users
+                    var users = JSON.parse(xhr.response);
+                    users.forEach(function(user) {
+                        var userDiv = document.createElement('div');
+                        userDiv.classList.add('user');
+                        userDiv.innerHTML = user.user + ' <button class="delete-btn" data-id="' + user.id + '">Delete</button>';
+                        t.appendChild(userDiv);
+                    });
 
                     // Attach click event to delete buttons
                     var deleteButtons = document.querySelectorAll('.delete-btn');
@@ -65,6 +80,9 @@
                     // Remove the user's div from the DOM
                     e.target.parentNode.remove();
                 }
+
+                let response = JSON.parse(deleteXhr.response);
+                alert(response.message);
             };
         }
     </script>
